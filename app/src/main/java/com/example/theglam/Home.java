@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.theglam.adapter.ProductAdapter;
@@ -21,6 +23,7 @@ public class Home extends AppCompatActivity {
     RecyclerView productCatRecycler, prodItemRecycler;
     ProductAdapter productAdapter;
     TextView hair, body, skin,face;
+    Button cart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,7 @@ public class Home extends AppCompatActivity {
         body=(TextView)findViewById(R.id.body);
         skin=(TextView)findViewById(R.id.skin);
         face=(TextView)findViewById(R.id.face);
+        cart=(Button) findViewById(R.id.cart);
 
 
         List<ProductCategory> productCategoryList = new ArrayList<>();
@@ -75,6 +79,14 @@ public class Home extends AppCompatActivity {
             }
         });
 
+        cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i =new Intent(getApplicationContext(),Cart.class);
+                startActivity(i);
+            }
+        });
+
     }
 
 
@@ -102,6 +114,7 @@ public class Home extends AppCompatActivity {
         productsList.add(new Products(2, "Hair product 1", "350 ml", "$ 25.00", R.drawable.prod1));
         productsList.add(new Products(1, "Hair product 1", "250 ml", "$ 17.00", R.drawable.prod2));
         productsList.add(new Products(2, "Hair product 1", "350 ml", "$ 25.00", R.drawable.prod1));
+
 
         setProdItemRecycler(productsList);
     }

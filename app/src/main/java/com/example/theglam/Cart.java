@@ -40,7 +40,7 @@ public class Cart extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), ThankYou.class);
                 startActivity(i);
-                finish();
+               
             }
         });
 

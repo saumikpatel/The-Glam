@@ -32,7 +32,7 @@ Button addtocart;
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), Cart.class);
                 startActivity(i);
-                finish();
+
             }
         });
     }
