@@ -12,6 +12,8 @@
         <activity android:name=".ProductDetails" />
         <activity android:name=".Home" />
         <activity android:name=".Signup" />
+        <activity android:name=".Cart" />
+        <activity android:name=".ThankYou" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

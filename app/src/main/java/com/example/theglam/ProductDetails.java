@@ -30,7 +30,7 @@ Button addtocart;
         addtocart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(),Cart.class);
+                Intent i = new Intent(getApplicationContext(), Cart.class);
                 startActivity(i);
                 finish();
             }

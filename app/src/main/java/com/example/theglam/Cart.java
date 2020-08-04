@@ -1,4 +1,4 @@
-package com.example.theglam.model;
+package com.example.theglam;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,11 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.example.theglam.R;
 import com.example.theglam.adapter.ListAdapter;
 
 public class Cart extends AppCompatActivity {
@@ -40,7 +38,7 @@ public class Cart extends AppCompatActivity {
         order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(),ThankYou.class);
+                Intent i = new Intent(getApplicationContext(), ThankYou.class);
                 startActivity(i);
                 finish();
             }
