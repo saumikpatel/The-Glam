@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "771517783859",
+    "firebase_url": "https://the-glam.firebaseio.com",
+    "project_id": "the-glam",
+    "storage_bucket": "the-glam.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:771517783859:android:a723714a71b3794c7de846",
+        "android_client_info": {
+          "package_name": "com.example.theglam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "771517783859-tiq68gf1su3pv1fr8s8e8lu7hssqjtks.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.theglam",
+            "certificate_hash": "f2446e0db261599f8183042fe8a48761601e6fff"
+          }
+        },
+        {
+          "client_id": "771517783859-nmhcopu0e5ehr01sb6c9aamjuc59mmb6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzknmxDsd4K9O__81-0qF18kSCEvwsHeg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "771517783859-nmhcopu0e5ehr01sb6c9aamjuc59mmb6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
