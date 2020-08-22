@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import  com.example.theglam.ProductDetails;
 import com.example.theglam.R;
 import com.example.theglam.model.Products;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     @Override
     public void onBindViewHolder(@NonNull final ProductViewHolder holder, int position) {
 
-        holder.prodImage.setImageResource(productsList.get(position).getImageUrl());
+        Picasso.get().load(productsList.get(position).getImageUrl()).into(holder.prodImage);
         holder.prodName.setText(productsList.get(position).getProductName());
         holder.prodQty.setText(productsList.get(position).getProductQty());
         holder.prodPrice.setText(productsList.get(position).getProductPrice());

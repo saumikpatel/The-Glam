@@ -1,20 +1,22 @@
 package com.example.theglam.model;
 
+import android.net.Uri;
+
 public class Products {
 
     Integer productid;
     String productName;
     String productQty;
     String productPrice;
-    Integer imageUrl;
+    private Uri uri;
 
-    public Products(Integer productid, String productName, String productQty, String productPrice, Integer imageUrl) {
+    public Products(Integer productid, String productName, String productQty, String productPrice, Uri uri) {
 
         this.productid = productid;
         this.productName = productName;
         this.productQty = productQty;
         this.productPrice = productPrice;
-        this.imageUrl = imageUrl;
+        this.uri = uri;
     }
 
     public String getProductName() {
@@ -41,12 +43,12 @@ public class Products {
         this.productPrice = productPrice;
     }
 
-    public Integer getImageUrl() {
-        return imageUrl;
+    public Uri getImageUrl() {
+        return uri;
     }
 
-    public void setImageUrl(Integer imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImageUrl(Uri imageUrl) {
+        this.uri = uri;
     }
 
     public Integer getProductid() {

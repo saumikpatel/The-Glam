@@ -1,11 +1,14 @@
 package com.example.theglam;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,9 +17,28 @@ import com.example.theglam.adapter.ProductAdapter;
 import com.example.theglam.adapter.ProductCategoryAdapter;
 import com.example.theglam.model.ProductCategory;
 import com.example.theglam.model.Products;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.net.URI;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicMarkableReference;
 
 public class Home extends AppCompatActivity {
     ProductCategoryAdapter productCategoryAdapter;
@@ -24,6 +46,11 @@ public class Home extends AppCompatActivity {
     ProductAdapter productAdapter;
     TextView hair, body, skin,face;
     Button cart;
+    private FirebaseAuth auth;
+    private FirebaseUser curUser;
+    Object doc;
+    FirebaseFirestore db;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +61,8 @@ public class Home extends AppCompatActivity {
         skin=(TextView)findViewById(R.id.skin);
         face=(TextView)findViewById(R.id.face);
         cart=(Button) findViewById(R.id.cart);
+        auth=FirebaseAuth.getInstance();
+        db=FirebaseFirestore.getInstance();
 
 
         List<ProductCategory> productCategoryList = new ArrayList<>();
@@ -47,110 +76,179 @@ public class Home extends AppCompatActivity {
         productCategoryList.add(new ProductCategory(7, "Fragrance"));
 
         setProductRecycler(productCategoryList);
-        bodyproduct(productsList);
+       // setdata();
+      //  bodyproduct(productsList);
 
 
         hair.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                removeitem(productsList);
+               // removeitem(productsList);
                 hairproduct(productsList);
             }
         });
-        body.setOnClickListener(new View.OnClickListener() {
+//        body.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                removeitem(productsList);
+//                bodyproduct(productsList);
+//            }
+//        });
+//        skin.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                removeitem(productsList);
+//                skinproduct(productsList);
+//            }
+//        });
+//        face.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                removeitem(productsList);
+//                faceprodcut(productsList);
+//            }
+//        });
+//
+//        cart.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent i =new Intent(getApplicationContext(),Cart.class);
+//                startActivity(i);
+//            }
+//        });
+
+    }
+
+
+
+
+
+
+
+//
+//    private void bodyproduct(List<Products> productsList){
+//
+//        productsList.add(new Products(1, "Japanese Cherry Blossom", "250 ml", "$ 17.00", R.drawable.prod2));
+//        productsList.add(new Products(2, "African Mango Shower Gel", "350 ml", "$ 25.00", R.drawable.prod1));
+//        productsList.add(new Products(1, "Japanese Cherry Blossom", "250 ml", "$ 17.00", R.drawable.prod2));
+//        productsList.add(new Products(2, "African Mango Shower Gel", "350 ml", "$ 25.00", R.drawable.prod1));
+//        productsList.add(new Products(1, "Japanese Cherry Blossom", "250 ml", "$ 17.00", R.drawable.prod2));
+//        productsList.add(new Products(2, "African Mango Shower Gel", "350 ml", "$ 25.00", R.drawable.prod1));
+//
+//        setProdItemRecycler(productsList);
+//    }
+
+    private void hairproduct(final List<Products> productsList){
+        db.collection("Products").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
-            public void onClick(View view) {
-                removeitem(productsList);
-                bodyproduct(productsList);
+            public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.d("", "Error : " + e.getMessage());
+                }
+                for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
+                    if (doc.getType() == DocumentChange.Type.ADDED) {
+                        Log.d("Brand Name: ", doc.getDocument().getId());
+                        doc.getDocument().getReference().collection("hair").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                            @Override
+                            public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+                                if (e != null) {
+                                    Log.d("", "Error : " + e.getMessage());
+                                }
+
+                                for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
+                                    if (doc.getType() == DocumentChange.Type.ADDED) {
+                                        Log.d("SubBrands Name: ", ""+doc.getDocument().getData());
+                                        String name= (String) doc.getDocument().getData().get("Name");
+                                        String description= (String) doc.getDocument().getData().get("Description");
+                                        String size= (String) doc.getDocument().getData().get("Size");
+                                        String price= (String) doc.getDocument().getData().get("Price");
+                                        String image= (String) doc.getDocument().getData().get("Image");
+
+                                        getImage(image,name,description,size,price,productsList);
+
+
+
+                                       // storageRef.child('images/stars.jpg').getDownloadURL()
+
+
+
+                                    }
+                                }
+                                setProdItemRecycler(productsList);
+
+                            }
+                        });
+                    }
+
+                }
+            }});
+
+//        productsList.add(new Products(1, "Hair product 1", "250 ml", "$ 17.00", R.drawable.prod2));
+//        productsList.add(new Products(2, "Hair product 1", "350 ml", "$ 25.00", R.drawable.prod1));
+//        productsList.add(new Products(1, "Hair product 1", "250 ml", "$ 17.00", R.drawable.prod2));
+//        productsList.add(new Products(2, "Hair product 1", "350 ml", "$ 25.00", R.drawable.prod1));
+//        productsList.add(new Products(1, "Hair product 1", "250 ml", "$ 17.00", R.drawable.prod2));
+//        productsList.add(new Products(2, "Hair product 1", "350 ml", "$ 25.00", R.drawable.prod1));
+
+
+
+    }
+//    private void skinproduct(List<Products> productsList){
+//
+//        productsList.add(new Products(1, "Skin product 1", "250 ml", "$ 17.00", R.drawable.prod2));
+//        productsList.add(new Products(2, "Skin product 1", "350 ml", "$ 25.00", R.drawable.prod1));
+//        productsList.add(new Products(1, "Skin product 1", "250 ml", "$ 17.00", R.drawable.prod2));
+//        productsList.add(new Products(2, "Skin product 1", "350 ml", "$ 25.00", R.drawable.prod1));
+//        productsList.add(new Products(1, "Skin product 1", "250 ml", "$ 17.00", R.drawable.prod2));
+//        productsList.add(new Products(2, "Skin product 1", "350 ml", "$ 25.00", R.drawable.prod1));
+//
+//        setProdItemRecycler(productsList);
+//    }
+//    private void faceprodcut(List<Products> productsList){
+//
+//        productsList.add(new Products(1, "Face product 1", "250 ml", "$ 17.00", R.drawable.prod2));
+//        productsList.add(new Products(2, "Face product 1", "350 ml", "$ 25.00", R.drawable.prod1));
+//        productsList.add(new Products(1, "Face product 1", "250 ml", "$ 17.00", R.drawable.prod2));
+//        productsList.add(new Products(2, "Face product 1", "350 ml", "$ 25.00", R.drawable.prod1));
+//        productsList.add(new Products(1, "Face product 1", "250 ml", "$ 17.00", R.drawable.prod2));
+//        productsList.add(new Products(2, "Face product 1", "350 ml", "$ 25.00", R.drawable.prod1));
+//
+//        setProdItemRecycler(productsList);
+//    }
+//
+//    private void removeitem(List<Products> productsList)
+//    {
+//        int size = productsList.size();
+//        if (size > 0) {
+//            for (int i = 0; i < size; i++) {
+//                productsList.remove(0);
+//            }
+//        }
+//    }
+//
+//
+
+    private void getImage(final String image, final String name, String description, final String size, final String price, final List<Products> productsList){
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();;
+
+        StorageReference storageRef = storage.getReference();
+        storageRef.child(image).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                // Got the download URL for 'users/me/profile.png'
+                productsList.add(new Products(1,  name, size+" ml", "$ "+price,uri ));
+
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
             }
         });
-        skin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                removeitem(productsList);
-                skinproduct(productsList);
-            }
-        });
-        face.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                removeitem(productsList);
-                faceprodcut(productsList);
-            }
-        });
-
-        cart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i =new Intent(getApplicationContext(),Cart.class);
-                startActivity(i);
-            }
-        });
 
     }
-
-
-
-
-
-
-    private void bodyproduct(List<Products> productsList){
-
-        productsList.add(new Products(1, "Japanese Cherry Blossom", "250 ml", "$ 17.00", R.drawable.prod2));
-        productsList.add(new Products(2, "African Mango Shower Gel", "350 ml", "$ 25.00", R.drawable.prod1));
-        productsList.add(new Products(1, "Japanese Cherry Blossom", "250 ml", "$ 17.00", R.drawable.prod2));
-        productsList.add(new Products(2, "African Mango Shower Gel", "350 ml", "$ 25.00", R.drawable.prod1));
-        productsList.add(new Products(1, "Japanese Cherry Blossom", "250 ml", "$ 17.00", R.drawable.prod2));
-        productsList.add(new Products(2, "African Mango Shower Gel", "350 ml", "$ 25.00", R.drawable.prod1));
-
-        setProdItemRecycler(productsList);
-    }
-
-    private void hairproduct(List<Products> productsList){
-
-        productsList.add(new Products(1, "Hair product 1", "250 ml", "$ 17.00", R.drawable.prod2));
-        productsList.add(new Products(2, "Hair product 1", "350 ml", "$ 25.00", R.drawable.prod1));
-        productsList.add(new Products(1, "Hair product 1", "250 ml", "$ 17.00", R.drawable.prod2));
-        productsList.add(new Products(2, "Hair product 1", "350 ml", "$ 25.00", R.drawable.prod1));
-        productsList.add(new Products(1, "Hair product 1", "250 ml", "$ 17.00", R.drawable.prod2));
-        productsList.add(new Products(2, "Hair product 1", "350 ml", "$ 25.00", R.drawable.prod1));
-
-
-        setProdItemRecycler(productsList);
-    }
-    private void skinproduct(List<Products> productsList){
-
-        productsList.add(new Products(1, "Skin product 1", "250 ml", "$ 17.00", R.drawable.prod2));
-        productsList.add(new Products(2, "Skin product 1", "350 ml", "$ 25.00", R.drawable.prod1));
-        productsList.add(new Products(1, "Skin product 1", "250 ml", "$ 17.00", R.drawable.prod2));
-        productsList.add(new Products(2, "Skin product 1", "350 ml", "$ 25.00", R.drawable.prod1));
-        productsList.add(new Products(1, "Skin product 1", "250 ml", "$ 17.00", R.drawable.prod2));
-        productsList.add(new Products(2, "Skin product 1", "350 ml", "$ 25.00", R.drawable.prod1));
-
-        setProdItemRecycler(productsList);
-    }
-    private void faceprodcut(List<Products> productsList){
-
-        productsList.add(new Products(1, "Face product 1", "250 ml", "$ 17.00", R.drawable.prod2));
-        productsList.add(new Products(2, "Face product 1", "350 ml", "$ 25.00", R.drawable.prod1));
-        productsList.add(new Products(1, "Face product 1", "250 ml", "$ 17.00", R.drawable.prod2));
-        productsList.add(new Products(2, "Face product 1", "350 ml", "$ 25.00", R.drawable.prod1));
-        productsList.add(new Products(1, "Face product 1", "250 ml", "$ 17.00", R.drawable.prod2));
-        productsList.add(new Products(2, "Face product 1", "350 ml", "$ 25.00", R.drawable.prod1));
-
-        setProdItemRecycler(productsList);
-    }
-
-    private void removeitem(List<Products> productsList)
-    {
-        int size = productsList.size();
-        if (size > 0) {
-            for (int i = 0; i < size; i++) {
-                productsList.remove(0);
-            }
-        }
-    }
-
 
     private void setProductRecycler(List<ProductCategory> productCategoryList){
 

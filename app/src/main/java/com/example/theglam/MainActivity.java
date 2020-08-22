@@ -105,14 +105,14 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        curUser=auth.getCurrentUser();
-//        if(curUser!=null){
-//            Intent i = new Intent(getApplicationContext(),Home.class);
-//            startActivity(i);
-//
-//        }
-//    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        curUser=auth.getCurrentUser();
+        if(curUser!=null){
+            Intent i = new Intent(getApplicationContext(),Home.class);
+            startActivity(i);
+
+        }
+    }
 }
