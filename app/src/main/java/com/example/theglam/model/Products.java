@@ -8,15 +8,19 @@ public class Products {
     String productName;
     String productQty;
     String productPrice;
+    String description;
     private Uri uri;
+    String category;
 
-    public Products(Integer productid, String productName, String productQty, String productPrice, Uri uri) {
+    public Products(Integer productid, String productName, String productQty, String productPrice, Uri uri, String description, String category) {
 
         this.productid = productid;
         this.productName = productName;
         this.productQty = productQty;
         this.productPrice = productPrice;
         this.uri = uri;
+        this.description=description;
+        this.category=category;
     }
 
     public String getProductName() {
@@ -25,6 +29,20 @@ public class Products {
 
     public void setProductName(String productName) {
         this.productName = productName;
+    }
+
+    public String getProductDescription() {
+        return description;
+    }
+    public void setProductDescription(String description) {
+        this.description = description;
+    }
+
+    public String getProductCategory() {
+        return category;
+    }
+    public void setProductCategory(String category) {
+        this.category = category;
     }
 
     public String getProductQty() {

@@ -120,6 +120,7 @@ public class Home extends AppCompatActivity {
         cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent i =new Intent(getApplicationContext(),Cart.class);
                 startActivity(i);
             }
@@ -156,7 +157,7 @@ public class Home extends AppCompatActivity {
                                         String image= (String) document.getData().get("Image");
 
 
-                                        getImage(id,image,name,description,size,price,productsList);
+                                        getImage(id,image,name,description,size,price,productsList,subbrand);
 
                          }
 
@@ -183,7 +184,7 @@ public class Home extends AppCompatActivity {
 
 
 
-    private void getImage(final int id,final String image, final String name, String description, final String size, final String price, final List<Products> productsList){
+    private void getImage(final int id, final String image, final String name, final String description, final String size, final String price, final List<Products> productsList, final String category){
         Log.d("", description);
         FirebaseStorage storage = FirebaseStorage.getInstance();;
 
@@ -192,7 +193,7 @@ public class Home extends AppCompatActivity {
             @Override
             public void onSuccess(Uri uri) {
                
-                productsList.add(new Products(id,  name, size+" ml", "$ "+price,uri ));
+                productsList.add(new Products(id,  name, size+" ml", "$ "+price,uri, description, category ));
 
                 setProdItemRecycler(productsList);
 
