@@ -30,6 +30,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -74,177 +75,133 @@ public class Home extends AppCompatActivity {
         productCategoryList.add(new ProductCategory(5, "Hair Care"));
         productCategoryList.add(new ProductCategory(6, "Make Up"));
         productCategoryList.add(new ProductCategory(7, "Fragrance"));
-
         setProductRecycler(productCategoryList);
-       // setdata();
-      //  bodyproduct(productsList);
+        setdata(productsList,"hair");
+
 
 
         hair.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // removeitem(productsList);
-                hairproduct(productsList);
+                removeitem(productsList);
+
+                setdata(productsList,"hair");
             }
         });
-//        body.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                removeitem(productsList);
-//                bodyproduct(productsList);
-//            }
-//        });
-//        skin.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                removeitem(productsList);
-//                skinproduct(productsList);
-//            }
-//        });
-//        face.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                removeitem(productsList);
-//                faceprodcut(productsList);
-//            }
-//        });
-//
-//        cart.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent i =new Intent(getApplicationContext(),Cart.class);
-//                startActivity(i);
-//            }
-//        });
 
-    }
-
-
-
-
-
-
-
-//
-//    private void bodyproduct(List<Products> productsList){
-//
-//        productsList.add(new Products(1, "Japanese Cherry Blossom", "250 ml", "$ 17.00", R.drawable.prod2));
-//        productsList.add(new Products(2, "African Mango Shower Gel", "350 ml", "$ 25.00", R.drawable.prod1));
-//        productsList.add(new Products(1, "Japanese Cherry Blossom", "250 ml", "$ 17.00", R.drawable.prod2));
-//        productsList.add(new Products(2, "African Mango Shower Gel", "350 ml", "$ 25.00", R.drawable.prod1));
-//        productsList.add(new Products(1, "Japanese Cherry Blossom", "250 ml", "$ 17.00", R.drawable.prod2));
-//        productsList.add(new Products(2, "African Mango Shower Gel", "350 ml", "$ 25.00", R.drawable.prod1));
-//
-//        setProdItemRecycler(productsList);
-//    }
-
-    private void hairproduct(final List<Products> productsList){
-        db.collection("Products").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        body.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
-                if (e != null) {
-                    Log.d("", "Error : " + e.getMessage());
-                }
-                for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
-                    if (doc.getType() == DocumentChange.Type.ADDED) {
-                        Log.d("Brand Name: ", doc.getDocument().getId());
-                        doc.getDocument().getReference().collection("hair").addSnapshotListener(new EventListener<QuerySnapshot>() {
-                            @Override
-                            public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
-                                if (e != null) {
-                                    Log.d("", "Error : " + e.getMessage());
-                                }
+            public void onClick(View view) {
+                removeitem(productsList);
+                setdata(productsList,"body");
+            }
+        });
 
-                                for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
-                                    if (doc.getType() == DocumentChange.Type.ADDED) {
-                                        Log.d("SubBrands Name: ", ""+doc.getDocument().getData());
-                                        String name= (String) doc.getDocument().getData().get("Name");
-                                        String description= (String) doc.getDocument().getData().get("Description");
-                                        String size= (String) doc.getDocument().getData().get("Size");
-                                        String price= (String) doc.getDocument().getData().get("Price");
-                                        String image= (String) doc.getDocument().getData().get("Image");
-
-                                        getImage(image,name,description,size,price,productsList);
+        skin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                removeitem(productsList);
+                setdata(productsList,"skin");
 
 
+            }
+        });
 
-                                       // storageRef.child('images/stars.jpg').getDownloadURL()
+        face.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                removeitem(productsList);
+                setdata(productsList,"face");
+
+
+            }
+        });
+
+        cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i =new Intent(getApplicationContext(),Cart.class);
+                startActivity(i);
+            }
+        });
+
+    }
 
 
 
-                                    }
-                                }
-                                setProdItemRecycler(productsList);
 
-                            }
-                        });
+
+
+
+
+    private void setdata(final List<Products> productsList, final String subbrand){
+
+
+
+        db.collection("Products")
+                .whereEqualTo("Category", subbrand)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("", document.getId() + " => " + document.getData());
+                                System.out.println(document.getId() + " => " + document.getData());
+                                 String name= (String) document.getData().get("Name");
+                                       String description= (String) document.getData().get("Description");
+                                        String size= (String) document.getData().get("Size");
+                                        String price= (String) document.getData().get("Price");
+                                        int id= Integer.parseInt(document.getId());
+                                        String image= (String) document.getData().get("Image");
+
+
+                                        getImage(id,image,name,description,size,price,productsList);
+
+                         }
+
+                        } else {
+                            Log.d("", "Error getting documents: ", task.getException());
+                        }
                     }
-
-                }
-            }});
-
-//        productsList.add(new Products(1, "Hair product 1", "250 ml", "$ 17.00", R.drawable.prod2));
-//        productsList.add(new Products(2, "Hair product 1", "350 ml", "$ 25.00", R.drawable.prod1));
-//        productsList.add(new Products(1, "Hair product 1", "250 ml", "$ 17.00", R.drawable.prod2));
-//        productsList.add(new Products(2, "Hair product 1", "350 ml", "$ 25.00", R.drawable.prod1));
-//        productsList.add(new Products(1, "Hair product 1", "250 ml", "$ 17.00", R.drawable.prod2));
-//        productsList.add(new Products(2, "Hair product 1", "350 ml", "$ 25.00", R.drawable.prod1));
-
+                });
 
 
     }
-//    private void skinproduct(List<Products> productsList){
-//
-//        productsList.add(new Products(1, "Skin product 1", "250 ml", "$ 17.00", R.drawable.prod2));
-//        productsList.add(new Products(2, "Skin product 1", "350 ml", "$ 25.00", R.drawable.prod1));
-//        productsList.add(new Products(1, "Skin product 1", "250 ml", "$ 17.00", R.drawable.prod2));
-//        productsList.add(new Products(2, "Skin product 1", "350 ml", "$ 25.00", R.drawable.prod1));
-//        productsList.add(new Products(1, "Skin product 1", "250 ml", "$ 17.00", R.drawable.prod2));
-//        productsList.add(new Products(2, "Skin product 1", "350 ml", "$ 25.00", R.drawable.prod1));
-//
-//        setProdItemRecycler(productsList);
-//    }
-//    private void faceprodcut(List<Products> productsList){
-//
-//        productsList.add(new Products(1, "Face product 1", "250 ml", "$ 17.00", R.drawable.prod2));
-//        productsList.add(new Products(2, "Face product 1", "350 ml", "$ 25.00", R.drawable.prod1));
-//        productsList.add(new Products(1, "Face product 1", "250 ml", "$ 17.00", R.drawable.prod2));
-//        productsList.add(new Products(2, "Face product 1", "350 ml", "$ 25.00", R.drawable.prod1));
-//        productsList.add(new Products(1, "Face product 1", "250 ml", "$ 17.00", R.drawable.prod2));
-//        productsList.add(new Products(2, "Face product 1", "350 ml", "$ 25.00", R.drawable.prod1));
-//
-//        setProdItemRecycler(productsList);
-//    }
-//
-//    private void removeitem(List<Products> productsList)
-//    {
-//        int size = productsList.size();
-//        if (size > 0) {
-//            for (int i = 0; i < size; i++) {
-//                productsList.remove(0);
-//            }
-//        }
-//    }
-//
-//
 
-    private void getImage(final String image, final String name, String description, final String size, final String price, final List<Products> productsList){
+    private void removeitem(List<Products> productsList)
+    {
+        int size = productsList.size();
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
+                productsList.remove(0);
+                productAdapter.notifyItemRemoved(i);
+                productAdapter.notifyItemRangeChanged(i, productsList.size());
+            }
+        }
+    }
 
+
+
+    private void getImage(final int id,final String image, final String name, String description, final String size, final String price, final List<Products> productsList){
+        Log.d("", description);
         FirebaseStorage storage = FirebaseStorage.getInstance();;
 
         StorageReference storageRef = storage.getReference();
         storageRef.child(image).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                // Got the download URL for 'users/me/profile.png'
-                productsList.add(new Products(1,  name, size+" ml", "$ "+price,uri ));
+               
+                productsList.add(new Products(id,  name, size+" ml", "$ "+price,uri ));
 
+                setProdItemRecycler(productsList);
 
             }
+
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
+
             }
         });
 
@@ -267,7 +224,7 @@ public class Home extends AppCompatActivity {
         prodItemRecycler.setLayoutManager(layoutManager);
         productAdapter = new ProductAdapter(this, productsList);
         prodItemRecycler.setAdapter(productAdapter);
-        //removeitem(productsList);
+
 
     }
 
