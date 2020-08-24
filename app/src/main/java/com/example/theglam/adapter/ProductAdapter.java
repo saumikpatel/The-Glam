@@ -2,6 +2,7 @@ package com.example.theglam.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.example.theglam.R;
 import com.example.theglam.model.Products;
 import com.squareup.picasso.Picasso;
 
+import java.net.URI;
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
@@ -59,6 +61,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 String description = productsList.get(position).getProductDescription();
                 String category = productsList.get(position).getProductCategory();
                 String price = productsList.get(position).getProductPrice();
+                Uri image = productsList.get(position).getDetailmageUrl();
 
 
 
@@ -67,6 +70,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 b.putString("Category", category);
                 b.putString("Price", price);
                 b.putInt("id", id);
+                b.putString("Image", String.valueOf(image));
 
 
                i.putExtras(b);

@@ -23,23 +23,19 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
+
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
+
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.net.URI;
+
 import java.util.ArrayList;
-import java.util.Collection;
+
 import java.util.List;
-import java.util.concurrent.atomic.AtomicMarkableReference;
+
 
 public class Home extends AppCompatActivity {
     ProductCategoryAdapter productCategoryAdapter;
@@ -78,8 +74,6 @@ public class Home extends AppCompatActivity {
         setProductRecycler(productCategoryList);
         setdata(productsList,"hair");
 
-
-
         hair.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,7 +96,6 @@ public class Home extends AppCompatActivity {
             public void onClick(View view) {
                 removeitem(productsList);
                 setdata(productsList,"skin");
-
 
             }
         });
@@ -155,9 +148,10 @@ public class Home extends AppCompatActivity {
                                         String price= (String) document.getData().get("Price");
                                         int id= Integer.parseInt(document.getId());
                                         String image= (String) document.getData().get("Image");
+                                        String detail_image= (String) document.getData().get("Detail_image");
 
 
-                                        getImage(id,image,name,description,size,price,productsList,subbrand);
+                                        getImage(id,image,name,description,size,price,productsList,subbrand,detail_image);
 
                          }
 
@@ -184,18 +178,25 @@ public class Home extends AppCompatActivity {
 
 
 
-    private void getImage(final int id, final String image, final String name, final String description, final String size, final String price, final List<Products> productsList, final String category){
+    private void getImage(final int id, final String image, final String name, final String description, final String size, final String price, final List<Products> productsList, final String category, final String detail_image){
         Log.d("", description);
         FirebaseStorage storage = FirebaseStorage.getInstance();;
 
-        StorageReference storageRef = storage.getReference();
+        final StorageReference storageRef = storage.getReference();
         storageRef.child(image).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
-            public void onSuccess(Uri uri) {
-               
-                productsList.add(new Products(id,  name, size+" ml", "$ "+price,uri, description, category ));
+            public void onSuccess(final Uri uri) {
+                storageRef.child(detail_image).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                                                  @Override
+                                                                                  public void onSuccess(Uri detail_image) {
+                                                                                      productsList.add(new Products(id,  name, size, price,uri, description, category , detail_image));
 
-                setProdItemRecycler(productsList);
+                                                                                      setProdItemRecycler(productsList);
+
+
+                                                                                  }
+                                                                              });
+               
 
             }
 

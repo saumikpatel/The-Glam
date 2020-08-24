@@ -11,8 +11,9 @@ public class Products {
     String description;
     private Uri uri;
     String category;
+    Uri detail_image;
 
-    public Products(Integer productid, String productName, String productQty, String productPrice, Uri uri, String description, String category) {
+    public Products(Integer productid, String productName, String productQty, String productPrice, Uri uri, String description, String category, Uri detail_image) {
 
         this.productid = productid;
         this.productName = productName;
@@ -21,6 +22,7 @@ public class Products {
         this.uri = uri;
         this.description=description;
         this.category=category;
+        this.detail_image=detail_image;
     }
 
     public String getProductName() {
@@ -67,6 +69,13 @@ public class Products {
 
     public void setImageUrl(Uri imageUrl) {
         this.uri = uri;
+    }
+    public Uri getDetailmageUrl() {
+        return detail_image;
+    }
+
+    public void setDetailimageUrl(Uri imageUrl) {
+        this.detail_image = detail_image;
     }
 
     public Integer getProductid() {
