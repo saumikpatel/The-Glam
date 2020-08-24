@@ -34,6 +34,7 @@ ImageView remove,add,productimage;
     FirebaseFirestore db;
     private FirebaseUser curUser;
     private FirebaseAuth auth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +92,12 @@ ImageView remove,add,productimage;
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Log.d("", "DocumentSnapshot successfully written!");
+                                Toast toast = Toast.makeText(getApplicationContext(),
+                                        "Added",
+                                        Toast.LENGTH_SHORT);
+                                toast.show();
+                                Intent i = new Intent(getApplicationContext(), Cart.class);
+                                startActivity(i);
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
