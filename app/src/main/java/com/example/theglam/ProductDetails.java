@@ -58,7 +58,7 @@ ImageView remove,add,productimage;
         final String p_price = b.getString("Price");
         final String p_name = b.getString("Name");
         String p_category = b.getString("Category");
-        String p_image= b.getString("Image");
+        final String p_image= b.getString("Image");
         curUser=auth.getCurrentUser();
         final String userid= String.valueOf(curUser.getUid());
 
@@ -85,6 +85,7 @@ ImageView remove,add,productimage;
                 data.put("Productid", id);
                 data.put("Name", p_name);
                 data.put("Price", price);
+                data.put("Image",p_image);
 
                 db.collection("Cart").document(String.valueOf(date))
                         .set(data)

@@ -2,9 +2,12 @@ package com.example.theglam;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +15,11 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.theglam.adapter.ListAdapter;
+import com.example.theglam.adapter.ProductAdapter;
+import com.example.theglam.adapter.ProductCategoryAdapter;
+import com.example.theglam.model.CartModel;
+import com.example.theglam.model.ProductCategory;
+import com.example.theglam.model.Products;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,32 +28,37 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Cart extends AppCompatActivity {
-    int[] images = {R.drawable.prod1};
+
     FirebaseFirestore db;
     private FirebaseAuth auth;
     private FirebaseUser curUser;
+    RecyclerView  cartItemRecycler;
+    ListAdapter cartAdapter;
 
-    String[] version = {"Beauty product 1"};
 
-    String[] versionNumber = {"12" };
 
-    ListView lView;
+
     Button order;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
+        final List<CartModel> productsList = new ArrayList<>();
 
-        ListAdapter lAdapter;
         auth= FirebaseAuth.getInstance();
         db=FirebaseFirestore.getInstance();
         curUser=auth.getCurrentUser();
         final String userid= String.valueOf(curUser.getUid());
 
-        lView = (ListView) findViewById(R.id.androidList);
+
         order = (Button) findViewById(R.id.order);
 
 
@@ -61,17 +74,19 @@ public class Cart extends AppCompatActivity {
                                 Log.d("", document.getId() + " => " + document.getData());
                                 System.out.println(document.getId() + " => " + document.getData());
                                 String name= (String) document.getData().get("Name");
-                                String description= (String) document.getData().get("Description");
-                                String size= (String) document.getData().get("Size");
-                                String price= (String) document.getData().get("Price");
-                                int id= Integer.parseInt(document.getId());
+                                String quantity= String.valueOf(document.getData().get("Quantity"));
+                                Integer id= (Integer) document.getData().get("id");
                                 String image= (String) document.getData().get("Image");
-                                String detail_image= (String) document.getData().get("Detail_image");
+                                String price= String.valueOf(document.getData().get("Price"));
+                                Uri myUri = Uri.parse(image);
+                                productsList.add(new CartModel(id,  name, quantity, price,myUri));
 
 
-                             //   getImage(id,image,name,description,size,price,productsList,subbrand,detail_image);
+
+
 
                             }
+                            setProdItemRecycler(productsList);
 
                         } else {
                             Log.d("", "Error getting documents: ", task.getException());
@@ -84,20 +99,24 @@ public class Cart extends AppCompatActivity {
 
 
 
-        lAdapter = new ListAdapter(Cart.this, version, versionNumber, images);
 
-        lView.setAdapter(lAdapter);
 
-        order.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), ThankYou.class);
-                startActivity(i);
-               
-            }
-        });
+
+
 
 
 
     }
+    private void setProdItemRecycler(List<CartModel > productsList){
+
+        cartItemRecycler = findViewById(R.id.cart_recycler);
+        RecyclerView.LayoutManager layoutManager= new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+        cartItemRecycler.setLayoutManager(layoutManager);
+        cartAdapter = new ListAdapter(this, productsList);
+        cartItemRecycler.setAdapter(cartAdapter);
+
+
     }
+
+
+}
