@@ -25,12 +25,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 public class Cart extends AppCompatActivity {
 
@@ -43,7 +45,10 @@ public class Cart extends AppCompatActivity {
 
 
 
+
     Button order;
+
+
 
 
     @Override
@@ -62,7 +67,6 @@ public class Cart extends AppCompatActivity {
         order = (Button) findViewById(R.id.order);
 
 
-
         db.collection("Cart")
                 .whereEqualTo("Userid", userid)
                 .get()
@@ -75,11 +79,14 @@ public class Cart extends AppCompatActivity {
                                 System.out.println(document.getId() + " => " + document.getData());
                                 String name= (String) document.getData().get("Name");
                                 String quantity= String.valueOf(document.getData().get("Quantity"));
-                                Integer id= (Integer) document.getData().get("id");
+                                long id= (long) document.getData().get("Productid");
+                                int cid=(int)id;
+                                Log.d("", ""+id);
+
                                 String image= (String) document.getData().get("Image");
                                 String price= String.valueOf(document.getData().get("Price"));
                                 Uri myUri = Uri.parse(image);
-                                productsList.add(new CartModel(id,  name, quantity, price,myUri));
+                                productsList.add(new CartModel(cid,  name, quantity, price,myUri));
 
 
 
@@ -87,6 +94,8 @@ public class Cart extends AppCompatActivity {
 
                             }
                             setProdItemRecycler(productsList);
+
+
 
                         } else {
                             Log.d("", "Error getting documents: ", task.getException());
@@ -97,17 +106,10 @@ public class Cart extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
-
-
-
     }
-    private void setProdItemRecycler(List<CartModel > productsList){
+
+
+    public void setProdItemRecycler(List<CartModel> productsList){
 
         cartItemRecycler = findViewById(R.id.cart_recycler);
         RecyclerView.LayoutManager layoutManager= new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
@@ -117,6 +119,11 @@ public class Cart extends AppCompatActivity {
 
 
     }
+
+
+
+
+
 
 
 }

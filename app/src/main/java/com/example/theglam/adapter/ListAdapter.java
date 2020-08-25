@@ -1,23 +1,37 @@
 package com.example.theglam.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.theglam.Cart;
 import com.example.theglam.ProductDetails;
 import com.example.theglam.R;
 import com.example.theglam.model.CartModel;
 import com.example.theglam.model.Products;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.gson.internal.$Gson$Preconditions;
 import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
@@ -30,6 +44,7 @@ import java.util.List;
 
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder>{
+    FirebaseFirestore db;
 
     Context context;
     List<CartModel> productsList;
@@ -38,6 +53,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
         //super(context, R.layout.single_list_app_item, utilsArrayList);
         this.context = context;
         this.productsList = productsList;
+        db=FirebaseFirestore.getInstance();
+
     }
 
 
@@ -50,19 +67,52 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ListAdapter.ListViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ListAdapter.ListViewHolder holder, final int position) {
         Picasso.get().load(productsList.get(position).getImageUrl()).into(holder.prodImage);
         holder.prodName.setText(productsList.get(position).getProductName());
         holder.prodQty.setText("Quantity "+productsList.get(position).getProductQty());
         holder.prodPrice.setText("Price "+productsList.get(position).getProductPrice());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+
+
+        holder.cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-            }
-        });
+              if(view.getId()==R.id.Cancel){
+                  Query productIdRef  =db.collection("Cart")
+                          .whereEqualTo("Productid", productsList.get(position).getProductid());
 
+                  productIdRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+
+                      @Override
+                      public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                          for (QueryDocumentSnapshot document : task.getResult()) {
+                              document.getReference().delete();
+                              productsList.remove(position);
+                              notifyItemRemoved(position);
+                              notifyItemRangeChanged(position, productsList.size());
+
+
+
+
+//
+
+                          }
+
+                      }
+
+
+
+//
+
+              });
+
+            }
+        }
+
+    });
     }
 
     @Override
@@ -74,6 +124,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
 
         ImageView prodImage;
         TextView prodName, prodQty, prodPrice;
+        Button cancel;
 
 
 
@@ -83,6 +134,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
             prodName = itemView.findViewById(R.id.cname);
             prodPrice = itemView.findViewById(R.id.cprice);
             prodQty = itemView.findViewById(R.id.cquantity);
+            cancel=itemView.findViewById(R.id.Cancel);
+
 
         }
     }
