@@ -2,27 +2,22 @@ package com.example.theglam.model;
 
 import android.net.Uri;
 
-public class Products {
-
+public class CartModel {
     Integer productid;
     String productName;
     String productQty;
     String productPrice;
-    String description;
     private Uri uri;
-    String category;
-    Uri detail_image;
 
-    public Products(Integer productid, String productName, String productQty, String productPrice, Uri uri, String description, String category, Uri detail_image) {
+
+    public CartModel(Integer productid, String productName, String productQty, String productPrice, Uri uri) {
 
         this.productid = productid;
         this.productName = productName;
         this.productQty = productQty;
         this.productPrice = productPrice;
         this.uri = uri;
-        this.description=description;
-        this.category=category;
-        this.detail_image=detail_image;
+
     }
 
     public String getProductName() {
@@ -33,19 +28,7 @@ public class Products {
         this.productName = productName;
     }
 
-    public String getProductDescription() {
-        return description;
-    }
-    public void setProductDescription(String description) {
-        this.description = description;
-    }
 
-    public String getProductCategory() {
-        return category;
-    }
-    public void setProductCategory(String category) {
-        this.category = category;
-    }
 
     public String getProductQty() {
         return productQty;
@@ -70,13 +53,7 @@ public class Products {
     public void setImageUrl(Uri imageUrl) {
         this.uri = uri;
     }
-    public Uri getDetailmageUrl() {
-        return detail_image;
-    }
 
-    public void setDetailimageUrl(Uri imageUrl) {
-        this.detail_image = detail_image;
-    }
 
     public Integer getProductid() {
         return productid;
@@ -85,4 +62,5 @@ public class Products {
     public void setProductid(Integer productid) {
         this.productid = productid;
     }
+
 }

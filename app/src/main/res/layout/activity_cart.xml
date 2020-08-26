@@ -6,11 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".Cart">
 
-    <ListView
-        android:id="@+id/androidList"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/cart_recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
+        android:layout_height="match_parent"
+        tools:listitem="@layout/single_list_item" />
 
     <Button
         android:id="@+id/order"

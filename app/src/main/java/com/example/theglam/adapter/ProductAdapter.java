@@ -2,6 +2,8 @@ package com.example.theglam.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import com.example.theglam.R;
 import com.example.theglam.model.Products;
 import com.squareup.picasso.Picasso;
 
+import java.net.URI;
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
@@ -38,7 +41,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ProductViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ProductViewHolder holder, final int position) {
 
         Picasso.get().load(productsList.get(position).getImageUrl()).into(holder.prodImage);
         holder.prodName.setText(productsList.get(position).getProductName());
@@ -49,11 +52,29 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(context, ProductDetails.class);
-/*
-                Pair[] pairs = new Pair[1];
-                pairs[0] = new Pair<View, String>(holder.prodImage, "image");
-                ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation((Activity) context, pairs);
-               */ context.startActivity(i/*, activityOptions.toBundle()*/);
+
+                 Bundle b = new Bundle();
+
+
+                int id = productsList.get(position).getProductid();
+                String name = productsList.get(position).getProductName();
+                String description = productsList.get(position).getProductDescription();
+                String category = productsList.get(position).getProductCategory();
+                String price = productsList.get(position).getProductPrice();
+                Uri image = productsList.get(position).getDetailmageUrl();
+
+
+
+                b.putString("Name",name);
+                b.putString("Description", description);
+                b.putString("Category", category);
+                b.putString("Price", price);
+                b.putInt("id", id);
+                b.putString("Image", String.valueOf(image));
+
+
+               i.putExtras(b);
+                context.startActivity(i/*, activityOptions.toBundle()*/);
             }
         });
 
@@ -72,7 +93,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
-
             prodImage = itemView.findViewById(R.id.prod_image);
             prodName = itemView.findViewById(R.id.prod_name);
             prodPrice = itemView.findViewById(R.id.prod_price);
