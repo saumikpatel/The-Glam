@@ -177,7 +177,6 @@ public class Home extends AppCompatActivity {
     }
 
 
-
     private void getImage(final int id, final String image, final String name, final String description, final String size, final String price, final List<Products> productsList, final String category, final String detail_image){
         Log.d("", description);
         FirebaseStorage storage = FirebaseStorage.getInstance();;
@@ -185,24 +184,18 @@ public class Home extends AppCompatActivity {
         final StorageReference storageRef = storage.getReference();
         storageRef.child(image).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
-<<<<<<< HEAD
-            public void onSuccess(Uri uri) {
-
-               
-=======
             public void onSuccess(final Uri uri) {
                 storageRef.child(detail_image).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                                                                  @Override
-                                                                                  public void onSuccess(Uri detail_image) {
-                                                                                      productsList.add(new Products(id,  name, size, price,uri, description, category , detail_image));
->>>>>>> 42b2be5d02a327901a6ee702c314fd94dba72e92
+                    @Override
+                    public void onSuccess(Uri detail_image) {
+                        productsList.add(new Products(id,  name, size, price,uri, description, category , detail_image));
 
-                                                                                      setProdItemRecycler(productsList);
+                        setProdItemRecycler(productsList);
 
 
-                                                                                  }
-                                                                              });
-               
+                    }
+                });
+
 
             }
 
