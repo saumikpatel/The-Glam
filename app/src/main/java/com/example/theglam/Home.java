@@ -191,7 +191,7 @@ public class Home extends AppCompatActivity {
         storageRef.child(image).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-               
+
                 productsList.add(new Products(id,  name, size+" ml", "$ "+price,uri ));
 
                 setProdItemRecycler(productsList);
