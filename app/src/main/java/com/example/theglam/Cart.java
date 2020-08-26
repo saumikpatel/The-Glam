@@ -104,9 +104,43 @@ public class Cart extends AppCompatActivity {
                 });
 
 
+        order.setOnClickListener(new View.OnClickListener() {
+
+
+            public void onClick(View view) {
+                double price=0;
+                for(int i=0;i<productsList.size();i++){
+                   price=price+ Double.parseDouble(productsList.get(i).getProductPrice());
+                   System.out.println(price);
+
+
+
+
+                }
+                Intent intent = new Intent(getApplicationContext(),OrderSummary.class);
+                Bundle b = new Bundle();
+
+
+
+
+
+
+
+
+                b.putDouble("price", price);
+
+
+                intent.putExtras(b);
+                startActivity(intent);
+            }
+        });
+
 
 
     }
+
+
+
 
 
     public void setProdItemRecycler(List<CartModel> productsList){
