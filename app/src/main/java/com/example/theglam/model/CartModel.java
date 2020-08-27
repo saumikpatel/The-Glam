@@ -1,8 +1,10 @@
 package com.example.theglam.model;
 
 import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class CartModel {
+public class CartModel implements Parcelable {
     Integer productid;
     String productName;
     String productQty;
@@ -19,6 +21,30 @@ public class CartModel {
         this.uri = uri;
 
     }
+
+    protected CartModel(Parcel in) {
+        if (in.readByte() == 0) {
+            productid = null;
+        } else {
+            productid = in.readInt();
+        }
+        productName = in.readString();
+        productQty = in.readString();
+        productPrice = in.readString();
+        uri = in.readParcelable(Uri.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<CartModel> CREATOR = new Parcelable.Creator<CartModel>() {
+        @Override
+        public CartModel createFromParcel(Parcel in) {
+            return new CartModel(in);
+        }
+
+        @Override
+        public CartModel[] newArray(int size) {
+            return new CartModel[size];
+        }
+    };
 
     public String getProductName() {
         return productName;
@@ -63,4 +89,22 @@ public class CartModel {
         this.productid = productid;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        if (productid == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(productid);
+        }
+        parcel.writeString(productName);
+        parcel.writeString(productQty);
+        parcel.writeString(productPrice);
+        parcel.writeParcelable(uri, i);
+    }
 }

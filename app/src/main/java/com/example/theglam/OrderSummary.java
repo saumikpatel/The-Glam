@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+
 public class OrderSummary extends AppCompatActivity {
 TextView stotal,Tp;
 Button btnCheckout;
@@ -23,6 +25,7 @@ Button btnCheckout;
         final Bundle b = getIntent().getExtras();
 
         final double price = b.getDouble("price");
+
         stotal.setText(""+price +" $");
 
         double total = price;
@@ -30,10 +33,12 @@ Button btnCheckout;
 
         Tp.setText(""+total +" $");
 
+
         btnCheckout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(),Address.class);
+                i.putExtras(b);
                 startActivity(i);
 
             }

@@ -56,7 +56,7 @@ public class Cart extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-        final List<CartModel> productsList = new ArrayList<>();
+        final ArrayList<CartModel> productsList = new ArrayList<>();
 
         auth= FirebaseAuth.getInstance();
         db=FirebaseFirestore.getInstance();
@@ -129,7 +129,7 @@ public class Cart extends AppCompatActivity {
 
                 b.putDouble("price", price);
 
-
+                b.putParcelableArrayList("list", productsList);
                 intent.putExtras(b);
                 startActivity(intent);
             }
