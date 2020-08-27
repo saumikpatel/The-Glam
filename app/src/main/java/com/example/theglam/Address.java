@@ -77,7 +77,7 @@ public class Address extends AppCompatActivity {
                     }
                 }
 
-                Intent i = new Intent(getApplicationContext(), Cart.class);
+                Intent i = new Intent(getApplicationContext(), ThankYou.class);
                 startActivity(i);
 
 
