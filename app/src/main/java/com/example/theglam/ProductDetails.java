@@ -91,6 +91,7 @@ ImageView remove,add,productimage;
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Log.d("", "DocumentSnapshot successfully written!");
+
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -139,7 +140,6 @@ ImageView remove,add,productimage;
         Picasso
                 .get()
                 .load(p_image)
-
                 .noFade()
                 .into(productimage);
 
