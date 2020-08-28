@@ -131,7 +131,7 @@ public class Address extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     document.getReference().delete();
-                   
+
 
 
 
