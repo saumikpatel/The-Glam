@@ -9,6 +9,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -227,6 +230,36 @@ public class Home extends AppCompatActivity {
         prodItemRecycler.setAdapter(productAdapter);
 
 
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.cart:
+                Intent i =new Intent(getApplicationContext(),Cart.class);
+                startActivity(i);
+                return true;
+            case R.id.orders:
+                Intent inte =new Intent(getApplicationContext(),Orders.class);
+                startActivity(inte);
+
+                return true;
+            case R.id.logout:
+                auth.signOut();
+                Intent in =new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(in);
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 }

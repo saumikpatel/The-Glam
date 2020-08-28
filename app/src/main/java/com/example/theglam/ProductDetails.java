@@ -93,12 +93,15 @@ ImageView remove,add,productimage;
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Log.d("", "DocumentSnapshot successfully written!");
+
+
                                 Toast toast = Toast.makeText(getApplicationContext(),
                                         "Added",
                                         Toast.LENGTH_SHORT);
                                 toast.show();
                                 Intent i = new Intent(getApplicationContext(), Cart.class);
                                 startActivity(i);
+
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -147,7 +150,6 @@ ImageView remove,add,productimage;
         Picasso
                 .get()
                 .load(p_image)
-
                 .noFade()
                 .into(productimage);
 
