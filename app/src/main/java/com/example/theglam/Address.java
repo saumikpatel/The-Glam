@@ -79,6 +79,7 @@ public class Address extends AppCompatActivity {
 
                 Intent i = new Intent(getApplicationContext(), ThankYou.class);
                 startActivity(i);
+                finish();
 
 
             }
