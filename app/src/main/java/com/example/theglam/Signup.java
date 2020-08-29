@@ -30,8 +30,19 @@ import java.util.regex.Pattern;
 
 public class Signup extends AppCompatActivity {
     //private static final String TAG = ;
+
+    /**
+     * signup button
+     */
     Button signup;
+    /**
+     * editetxt
+     */
     EditText fname, lname, email, password;
+
+    /**
+     * firebase auth variable
+     */
     private FirebaseAuth mAuth;
 
     @Override
@@ -45,9 +56,12 @@ public class Signup extends AppCompatActivity {
         email=(EditText) findViewById(R.id.semail);
         password=(EditText) findViewById(R.id.spassword);
 
+
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-
+        /**
+         * fignup button onclick listener
+         */
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,10 +92,9 @@ public class Signup extends AppCompatActivity {
                 usermap.put("Lname",userlanme);
 
 
-
-
-
-
+                /**
+                 * authentiction using firebase
+                 */
                 mAuth.createUserWithEmailAndPassword(useremail, userpassword).addOnCompleteListener(Signup.this, new OnCompleteListener<AuthResult>() {
                     @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
@@ -117,6 +130,12 @@ public class Signup extends AppCompatActivity {
 
 
     }
+
+    /**
+     * email validity function
+     * @param email
+     * @return
+     */
     public static boolean isEmailValid(String email) {
         String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]+$";
         Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);

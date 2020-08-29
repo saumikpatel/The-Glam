@@ -25,7 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Orders extends AppCompatActivity {
-
+    /**
+     * variable declarration
+     */
     FirebaseFirestore db;
     private FirebaseAuth auth;
     private FirebaseUser curUser;
@@ -85,6 +87,11 @@ public class Orders extends AppCompatActivity {
                 });
 
     }
+
+    /**
+     * function to set item on recyclerview
+     * @param productsList
+     */
     public void setProdItemRecycler(List<OrderModel> productsList){
 
         orderItemRecycler = findViewById(R.id.order_recycler);

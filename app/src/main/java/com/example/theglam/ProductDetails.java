@@ -27,7 +27,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ProductDetails extends AppCompatActivity {
-ImageView back;
+
+    /**
+     * variable declaration
+     */
+    ImageView back;
 Button addtocart;
 TextView description,price,quantity,name,category;
 ImageView remove,add,productimage;
@@ -62,7 +66,9 @@ ImageView remove,add,productimage;
         curUser=auth.getCurrentUser();
         final String userid= String.valueOf(curUser.getUid());
 
-
+        /**
+         * go back function
+         */
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,6 +77,10 @@ ImageView remove,add,productimage;
                 finish();
             }
         });
+
+        /**
+         * add to cart functionality
+         */
         addtocart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,6 +123,11 @@ ImageView remove,add,productimage;
 
             }
         });
+
+
+        /**
+         * increase the quantity
+         */
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -122,6 +137,10 @@ ImageView remove,add,productimage;
 
             }
         });
+
+        /**
+         * decrease the quantity
+         */
         remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

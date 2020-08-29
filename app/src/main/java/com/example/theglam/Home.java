@@ -41,6 +41,7 @@ import java.util.List;
 
 
 public class Home extends AppCompatActivity {
+
     ProductCategoryAdapter productCategoryAdapter;
     RecyclerView productCatRecycler, prodItemRecycler;
     ProductAdapter productAdapter;
@@ -60,7 +61,7 @@ public class Home extends AppCompatActivity {
         body=(TextView)findViewById(R.id.body);
         skin=(TextView)findViewById(R.id.skin);
         face=(TextView)findViewById(R.id.face);
-        cart=(Button) findViewById(R.id.cart);
+      
         auth=FirebaseAuth.getInstance();
         db=FirebaseFirestore.getInstance();
 
@@ -113,24 +114,16 @@ public class Home extends AppCompatActivity {
             }
         });
 
-        cart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                Intent i =new Intent(getApplicationContext(),Cart.class);
-                startActivity(i);
-            }
-        });
 
     }
 
 
-
-
-
-
-
-
+    /**
+     * this methos is use to set data
+     * @param productsList
+     * @param subbrand
+     */
     private void setdata(final List<Products> productsList, final String subbrand){
 
 
@@ -167,6 +160,10 @@ public class Home extends AppCompatActivity {
 
     }
 
+    /**
+     *
+     * @param productsList
+     */
     private void removeitem(List<Products> productsList)
     {
         int size = productsList.size();
@@ -180,6 +177,18 @@ public class Home extends AppCompatActivity {
     }
 
 
+    /**
+     * 
+     * @param id
+     * @param image
+     * @param name
+     * @param description
+     * @param size
+     * @param price
+     * @param productsList
+     * @param category
+     * @param detail_image
+     */
     private void getImage(final int id, final String image, final String name, final String description, final String size, final String price, final List<Products> productsList, final String category, final String detail_image){
         Log.d("", description);
         FirebaseStorage storage = FirebaseStorage.getInstance();;
@@ -210,6 +219,8 @@ public class Home extends AppCompatActivity {
         });
 
     }
+
+
 
     private void setProductRecycler(List<ProductCategory> productCategoryList){
 
