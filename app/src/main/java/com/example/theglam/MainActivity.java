@@ -21,10 +21,25 @@ import com.google.firebase.auth.FirebaseUser;
 
 
 public class MainActivity extends AppCompatActivity {
+    /**
+     * variable declaration
+     */
     Button login;
+    /**
+     * variable declaration
+     */
     TextView signup;
+    /**
+     * variable declaration
+     */
     private FirebaseAuth auth;
+    /**
+     * variable declaration
+     */
     private FirebaseUser curUser;
+    /**
+     * variable declaration
+     */
     EditText email,pass;
 
 
@@ -40,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        /**
+         * login functionality
+         */
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,6 +113,10 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        /**
+         *  go to signup activity
+         */
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,14 +127,14 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        curUser=auth.getCurrentUser();
-        if(curUser!=null){
-            Intent i = new Intent(getApplicationContext(),Home.class);
-            startActivity(i);
-
-        }
-    }
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        curUser=auth.getCurrentUser();
+//        if(curUser!=null){
+//            Intent i = new Intent(getApplicationContext(),Home.class);
+//            startActivity(i);
+//
+//        }
+//    }
 }

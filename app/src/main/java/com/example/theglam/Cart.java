@@ -35,17 +35,33 @@ import java.util.List;
 import java.util.ListIterator;
 
 public class Cart extends AppCompatActivity {
-
+    /**
+     * variable declaration
+     */
     FirebaseFirestore db;
+    /**
+     * variable declaration
+     */
     private FirebaseAuth auth;
+    /**
+     * variable declaration
+     */
     private FirebaseUser curUser;
+    /**
+     * variable declaration
+     */
     RecyclerView  cartItemRecycler;
+    /**
+     * variable declaration
+     */
     ListAdapter cartAdapter;
 
 
 
 
-
+    /**
+     * variable declaration
+     */
     Button order;
 
 
@@ -140,9 +156,10 @@ public class Cart extends AppCompatActivity {
     }
 
 
-
-
-
+    /**
+     * set item on recycler view
+     * @param productsList
+     */
     public void setProdItemRecycler(List<CartModel> productsList){
 
         cartItemRecycler = findViewById(R.id.cart_recycler);

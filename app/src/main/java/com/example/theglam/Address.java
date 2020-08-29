@@ -35,10 +35,21 @@ public class Address extends AppCompatActivity {
      * variable declaration
      */
     TextView uname,uapt,uaddress,ucity,upostal;
+    /**
+     * variable declaration
+     */
     Button btnNext;
-
+    /**
+     * variable declaration
+     */
     FirebaseFirestore db;
+    /**
+     * variable declaration
+     */
     private FirebaseUser curUser;
+    /**
+     * variable declaration
+     */
     private FirebaseAuth auth;
 
 
