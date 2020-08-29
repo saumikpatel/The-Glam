@@ -42,6 +42,10 @@ import java.util.List;
 
 public class Home extends AppCompatActivity {
 
+    /**
+     * variable declaration
+     */
+
     ProductCategoryAdapter productCategoryAdapter;
     RecyclerView productCatRecycler, prodItemRecycler;
     ProductAdapter productAdapter;
@@ -77,6 +81,8 @@ public class Home extends AppCompatActivity {
         productCategoryList.add(new ProductCategory(7, "Fragrance"));
         setProductRecycler(productCategoryList);
         setdata(productsList,"hair");
+
+
 
         hair.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,7 +126,7 @@ public class Home extends AppCompatActivity {
 
 
     /**
-     * this methos is use to set data
+     * this method is use to set data
      * @param productsList
      * @param subbrand
      */
@@ -178,7 +184,7 @@ public class Home extends AppCompatActivity {
 
 
     /**
-     * 
+     * get image from firestore
      * @param id
      * @param image
      * @param name
@@ -221,7 +227,10 @@ public class Home extends AppCompatActivity {
     }
 
 
-
+    /**
+     * set item for product category
+     * @param productCategoryList
+     */
     private void setProductRecycler(List<ProductCategory> productCategoryList){
 
         productCatRecycler = findViewById(R.id.cat_recycler);
@@ -232,6 +241,11 @@ public class Home extends AppCompatActivity {
 
     }
 
+    /**
+     * set item for product list
+     *
+     * @param productsList
+     */
     private void setProdItemRecycler(List<Products> productsList){
 
         prodItemRecycler = findViewById(R.id.product_recycler);
@@ -249,6 +263,12 @@ public class Home extends AppCompatActivity {
         return true;
     }
 
+
+    /**
+     * switch case for options menu
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection

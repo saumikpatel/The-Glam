@@ -31,6 +31,9 @@ import java.util.List;
 import java.util.Map;
 
 public class Address extends AppCompatActivity {
+    /**
+     * variable declaration
+     */
     TextView uname,uapt,uaddress,ucity,upostal;
     Button btnNext;
 
@@ -86,6 +89,16 @@ public class Address extends AppCompatActivity {
         });
     }
 
+    /**
+     * saving address data on db with order details
+     * @param name
+     * @param apt
+     * @param address
+     * @param city
+     * @param postal
+     * @param i
+     * @param list
+     */
     private void savedata(String name, String apt, String address, String city, String postal, final int i, final ArrayList<CartModel> list) {
         final String userid= String.valueOf(curUser.getUid());
         Date date = new Date();
