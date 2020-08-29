@@ -43,17 +43,41 @@ import java.util.List;
 public class Home extends AppCompatActivity {
 
     /**
-     * variable declaration
+     * variable declaration for adapter
      */
 
     ProductCategoryAdapter productCategoryAdapter;
+    /**
+     * variable declaration for recyclerview
+     */
     RecyclerView productCatRecycler, prodItemRecycler;
+    /**
+     * variable declaration for prodcut adapter
+     */
     ProductAdapter productAdapter;
+    /**
+     * variable declaration for textview
+     */
     TextView hair, body, skin,face;
+    /**
+     * variable declaration
+     */
     Button cart;
+    /**
+     * variable declaration for authentication oobject
+     */
     private FirebaseAuth auth;
+    /**
+     * variable declaration for current user
+     */
     private FirebaseUser curUser;
+    /**
+     * variable declaration
+     */
     Object doc;
+    /**
+     * variable declaration
+     */
     FirebaseFirestore db;
 
 
@@ -167,7 +191,7 @@ public class Home extends AppCompatActivity {
     }
 
     /**
-     *
+     * remover item from productlist
      * @param productsList
      */
     private void removeitem(List<Products> productsList)

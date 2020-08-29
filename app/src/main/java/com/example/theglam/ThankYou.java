@@ -8,13 +8,20 @@ import android.view.View;
 import android.widget.Button;
 
 public class ThankYou extends AppCompatActivity {
-Button cont;
+    /**
+     * variable declaration
+     */
+    Button cont;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thank_you);
         cont=findViewById(R.id.cont);
 
+
+        /**
+         * got o homr activity
+         */
         cont.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -14,11 +14,11 @@ import java.util.ArrayList;
 
 public class OrderSummary extends AppCompatActivity {
     /**
-     * variable declarration
+     * variable declarration for textview
      */
 TextView stotal,Tp;
     /**
-     * variable declarration
+     * variable declarration for button
      */
 Button btnCheckout;
     @Override

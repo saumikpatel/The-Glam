@@ -29,14 +29,32 @@ import java.util.Map;
 public class ProductDetails extends AppCompatActivity {
 
     /**
-     * variable declaration
+     * variable declaration for imageview
      */
     ImageView back;
+    /**
+     * variable declaration button
+     */
 Button addtocart;
+    /**
+     * variable declaration for textview
+     */
 TextView description,price,quantity,name,category;
+    /**
+     * variable declaration for imageview
+     */
 ImageView remove,add,productimage;
+    /**
+     * variable declaration for db object
+     */
     FirebaseFirestore db;
+    /**
+     * variable declaration
+     */
     private FirebaseUser curUser;
+    /**
+     * variable declaration for authentication object
+     */
     private FirebaseAuth auth;
 
     @Override

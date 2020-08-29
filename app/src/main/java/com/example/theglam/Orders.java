@@ -26,23 +26,23 @@ import java.util.List;
 
 public class Orders extends AppCompatActivity {
     /**
-     * variable declarration
+     * variable declarration for db object
      */
     FirebaseFirestore db;
     /**
-     * variable declarration
+     * variable declarration for authentication object
      */
     private FirebaseAuth auth;
     /**
-     * variable declarration
+     * variable declarration for current user
      */
     private FirebaseUser curUser;
     /**
-     * variable declarration
+     * variable declarration fot  order recyclerview
      */
     RecyclerView orderItemRecycler;
     /**
-     * variable declarration
+     * variable declarration for order adapter
      */
     OrderAdapter orderAdapter;
 

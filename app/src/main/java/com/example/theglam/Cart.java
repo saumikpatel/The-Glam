@@ -36,23 +36,23 @@ import java.util.ListIterator;
 
 public class Cart extends AppCompatActivity {
     /**
-     * variable declaration
+     * variable declaration db object
      */
     FirebaseFirestore db;
     /**
-     * variable declaration
+     * variable declaration authenication object
      */
     private FirebaseAuth auth;
     /**
-     * variable declaration
+     * variable declarationfor current user
      */
     private FirebaseUser curUser;
     /**
-     * variable declaration
+     * variable declaration for recyclerview
      */
     RecyclerView  cartItemRecycler;
     /**
-     * variable declaration
+     * variable declaration for list adapter
      */
     ListAdapter cartAdapter;
 

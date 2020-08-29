@@ -22,23 +22,23 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
     /**
-     * variable declaration
+     * variable declaration for button
      */
     Button login;
     /**
-     * variable declaration
+     * variable declaration for textview
      */
     TextView signup;
     /**
-     * variable declaration
+     * variable declaration for authentication object
      */
     private FirebaseAuth auth;
     /**
-     * variable declaration
+     * variable declaration for current user
      */
     private FirebaseUser curUser;
     /**
-     * variable declaration
+     * variable declaration edittext
      */
     EditText email,pass;
 

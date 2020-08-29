@@ -32,19 +32,19 @@ import java.util.Map;
 
 public class Address extends AppCompatActivity {
     /**
-     * variable declaration
+     * variable declaration for textview
      */
     TextView uname,uapt,uaddress,ucity,upostal;
     /**
-     * variable declaration
+     * variable declaration for button
      */
     Button btnNext;
     /**
-     * variable declaration
+     * variable declaration db objet
      */
     FirebaseFirestore db;
     /**
-     * variable declaration
+     * variable declaration current user object
      */
     private FirebaseUser curUser;
     /**
