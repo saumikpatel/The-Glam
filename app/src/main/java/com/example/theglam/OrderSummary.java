@@ -13,7 +13,13 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 
 public class OrderSummary extends AppCompatActivity {
+    /**
+     * variable declarration
+     */
 TextView stotal,Tp;
+    /**
+     * variable declarration
+     */
 Button btnCheckout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +39,9 @@ Button btnCheckout;
 
         Tp.setText(""+total +" $");
 
-
+        /**
+         * got o checkout activity
+         */
         btnCheckout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

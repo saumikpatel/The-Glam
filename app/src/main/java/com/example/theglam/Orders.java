@@ -29,9 +29,21 @@ public class Orders extends AppCompatActivity {
      * variable declarration
      */
     FirebaseFirestore db;
+    /**
+     * variable declarration
+     */
     private FirebaseAuth auth;
+    /**
+     * variable declarration
+     */
     private FirebaseUser curUser;
+    /**
+     * variable declarration
+     */
     RecyclerView orderItemRecycler;
+    /**
+     * variable declarration
+     */
     OrderAdapter orderAdapter;
 
 
